@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .toast-content{
+            /* position: relative; */
+            position: fixed;
+            left: calc(50% - 100px);
+            width: 200px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .toast-msg{
+            color: #fff;
+            font-weight: 600;
+        }
+        .suc{
+            background-color: rgb(21, 189, 21);
+        }
+        .fail{
+            background-color: rgb(247, 25, 25);
+        }
+        @keyframes fadeIn{
+            0%{
+                top: -100%;
+                opacity: 0;
+            }
+            100%{
+                top: 0%;
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut{
+            0%{
+                top: 0%;
+                opacity: 1;
+            }
+            100%{
+                top: -100%;
+                opacity: 0;
+            }
+        }
+        .fade-in{
+            animation: fadeIn .5s;
+        }
+        .fade-out{
+            animation: fadeOut .5s;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">点击</button>
+    <!-- <div class="toast-content">
+        <div class="toast-msg">修改成功</div>
+    </div> -->
+
+    <script>
+        const btn = document.getElementById('btn')
+        btn.onclick =function(){
+            const app = new Vue({
+                data(){
+                    return {
+                        flag:true,
+                        msg:'修改成功',
+                        show:true,
+                        type:'suc'
+                    }
+                },
+                el:document.createElement('div'),
+                template:`
+                    <div class="toast-content" :class="[type,animated]" v-if="flag">
+                        <div class="toast-msg">{{ msg }}</div>
+                    </div>
+                `,
+                computed:{
+                    animated(){
+                        return this.show ? 'fade-in' : 'fade-out' 
+                    }
+                }
+                
+            })
+            document.body.appendChild(app.$el)
+            setTimeout(_=>{
+                app.flag= false
+            },2400)
+            setTimeout(_=>{
+                app.show = false
+            },2000)
+
+        }
+    </script>
+</body>
+</html>
